@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Print work items</title>
+</head>
+
+<body>
+    <!-- <script src="node_modules/vss-web-extension-sdk/lib/VSS.SDK.min.js"></script> -->
+    <script src="lib/VSS.SDK.min.js"></script>
+    
+    <script>
+        VSS.init({
+            explicitNotifyLoaded: true,
+            usePlatformScripts: true
+        });
+
+        console.log("VSS Init")
+        
+        VSS.register('AdenEarnshaw.vsts-ticket-printing.printTicketsAction', {
+            execute: function(actionContext){
+                    console.log(actionContext);
+                    window.alert("Print clicked");
+                }            
+        });
+    </script>
+</body>
+</html>
