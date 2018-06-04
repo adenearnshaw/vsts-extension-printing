@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "pack": "tfx extension create --output-path ./dist/ --rev-version",
+    "build": "tsc",
+    "pack": "npm run build && tfx extension create --output-path ./dist/ --rev-version",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
