@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Print work items</title>
+</head>
+
+<body>
+    <script src="../lib/VSS.SDK.min.js"></script>
+    <script>
+        VSS.init({
+            setupModuleLoader: true,
+            usePlatformScripts: true,
+            usePlatformStyles: true
+        });
+    </script>
+
+    <script>
+        VSS.init({
+            explicitNotifyLoaded: true,
+            usePlatformScripts: true,
+            usePlatformStyles: true
+        });
+
+        VSS.require(["dist/app"], function (app) { });
+
+
+        // VSS.register("AdenEarnshaw.vsts-ticket-printing.printTicketsAction", function (context) {
+        //     return {
+        //         execute: function(actionContext) {
+        //             console.log(actionContext.workItemIds);
+        //             window.alert(`Selected work item count: ${actionContext.workItemIds.length}`);
+        //         }            
+        //     }
+        // });
+
+        // VSS.notifyLoadSucceeded();
+    </script>
+</body>
+
+</html>
