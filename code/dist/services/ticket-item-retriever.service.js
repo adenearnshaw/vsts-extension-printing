@@ -36,8 +36,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 define(["require", "exports", "TFS/WorkItemTracking/RestClient"], function (require, exports, RestClient) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var WorkItemRetriever = /** @class */ (function () {
-        function WorkItemRetriever() {
+    var TicketItemRetrieverService = /** @class */ (function () {
+        function TicketItemRetrieverService() {
             this._workItemFieldKeys = {
                 'id': 'System.Id',
                 'title': 'System.Title',
@@ -46,19 +46,20 @@ define(["require", "exports", "TFS/WorkItemTracking/RestClient"], function (requ
                 'tags': 'System.Tags'
             };
         }
-        WorkItemRetriever.prototype.retrieveWorkItems = function (projectName, workItemIds) {
+        TicketItemRetrieverService.prototype.retrieveTicketItems = function (projectName, workItemIds) {
             return __awaiter(this, void 0, void 0, function () {
-                var client, _a, workItems, ticketItems;
+                var client, workItemFields, _a, workItems, ticketItems;
                 var _this = this;
                 return __generator(this, function (_b) {
                     switch (_b.label) {
                         case 0:
                             client = RestClient.getClient();
+                            workItemFields = Object.keys(this._workItemFieldKeys).map(function (k) { return _this._workItemFieldKeys[k]; });
                             _a = this;
                             return [4 /*yield*/, client.getWorkItemTypes(projectName)];
                         case 1:
                             _a._workItemTypes = _b.sent();
-                            return [4 /*yield*/, client.getWorkItems(workItemIds, this._workItemFieldKeys.values)];
+                            return [4 /*yield*/, client.getWorkItems(workItemIds, workItemFields)];
                         case 2:
                             workItems = _b.sent();
                             ticketItems = workItems.map(function (wi) { return _this.buildTicketItem(wi); });
@@ -67,25 +68,37 @@ define(["require", "exports", "TFS/WorkItemTracking/RestClient"], function (requ
                 });
             });
         };
-        WorkItemRetriever.prototype.buildTicketItem = function (workItem) {
-            var workItemTypeName = workItem.fields[this._workItemFieldKeys['itemType']];
-            var workItemType = this._workItemTypes.filter(function (wi) { return wi.name == workItemTypeName; })[0];
+        TicketItemRetrieverService.prototype.buildTicketItem = function (workItem) {
             var ticketItem = {
                 id: workItem.fields[this._workItemFieldKeys['id']],
                 title: workItem.fields[this._workItemFieldKeys['title']],
-                effort: workItem.fields[this._workItemFieldKeys['effort']],
+                effort: this.extractEffort(workItem.fields[this._workItemFieldKeys['effort']]),
                 tags: this.extractTags(workItem.fields[this._workItemFieldKeys['tags']]),
-                accent: "#" + workItemType.color
+                accent: this.extractAccent(workItem.fields[this._workItemFieldKeys['itemType']])
             };
             return ticketItem;
         };
-        WorkItemRetriever.prototype.extractTags = function (tagsRaw) {
+        TicketItemRetrieverService.prototype.extractEffort = function (effortRaw) {
+            if (!effortRaw) {
+                return "-";
+            }
+            return effortRaw;
+        };
+        TicketItemRetrieverService.prototype.extractTags = function (tagsRaw) {
             if (!tagsRaw) {
                 return [];
             }
             return tagsRaw.split(';').map(function (s) { return s.trim(); });
         };
-        return WorkItemRetriever;
+        TicketItemRetrieverService.prototype.extractAccent = function (itemType) {
+            var workItemType = this._workItemTypes.filter(function (wi) { return wi.name == itemType; })[0];
+            if (!workItemType) {
+                return '#FFFFFF';
+            }
+            var accent = "#" + workItemType.color;
+            return accent;
+        };
+        return TicketItemRetrieverService;
     }());
-    exports.WorkItemRetriever = WorkItemRetriever;
+    exports.TicketItemRetrieverService = TicketItemRetrieverService;
 });

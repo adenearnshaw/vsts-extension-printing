@@ -1,6 +1,6 @@
 import RestClient = require('TFS/WorkItemTracking/RestClient');
 import Contracts = require('TFS/WorkItemTracking/Contracts');
-import Tickets = require('../tickets/tickets');
+import Tickets = require('../tickets/tickets.module');
 
 export class TicketItemRetrieverService {
     private _workItemTypes: Contracts.WorkItemType[];
@@ -18,8 +18,10 @@ export class TicketItemRetrieverService {
     public async retrieveTicketItems(projectName: string, workItemIds: number[]) {
         const client = RestClient.getClient();
 
+        const workItemFields: string[] = Object.keys(this._workItemFieldKeys).map(k => this._workItemFieldKeys[k]);
+
         this._workItemTypes = await client.getWorkItemTypes(projectName);
-        const workItems = await client.getWorkItems(workItemIds, this._workItemFieldKeys.values);
+        const workItems = await client.getWorkItems(workItemIds, workItemFields);
         const ticketItems: Tickets.TicketItem[] = workItems.map(wi => this.buildTicketItem(wi));
 
         return ticketItems;
