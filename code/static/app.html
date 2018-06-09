@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Print work items</title>
+</head>
+
+<body>
+    <script src="../lib/VSS.SDK.min.js"></script>
+    <script>
+        VSS.init({
+            setupModuleLoader: true,
+            usePlatformScripts: true,
+            usePlatformStyles: true
+        });
+    </script>
+
+    <script>
+        VSS.init({
+            explicitNotifyLoaded: true,
+            usePlatformScripts: true,
+            usePlatformStyles: true
+        });
+
+        VSS.require(["dist/app"], function (app) { });
+    </script>
+</body>
+
+</html>

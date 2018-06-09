@@ -1,0 +1,25 @@
+{
+  "name": "vsts-extension-printing",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "author": "Aden Earnshaw",
+  "license": "ISC",
+  "scripts": {
+    "prebuild": "npm run lint",
+    "build": "tsc -p .",
+    "postbuild": "npm run package",
+    "package": "tfx extension create --output-path ./packages/ --rev-version",
+    "gallery-publish": "tfx extension publish --output-path ./packages/ --rev-version",
+    "clean": "rimraf ./dist && rimraf ./packages/*.vsix",
+    "lint": "tslint -c tslint.json 'src/*.ts'"
+  },
+  "dependencies": {
+    "vss-web-extension-sdk": "^5.134.0"
+  },
+  "devDependencies": {
+    "rimraf": "^2.5.4",
+    "tfx-cli": "^0.5.10",
+    "tslint": "^5.10.0",
+    "typescript": "^2.9.1"  }
+}
