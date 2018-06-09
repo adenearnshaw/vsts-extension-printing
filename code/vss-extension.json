@@ -1,7 +1,7 @@
 {
     "manifestVersion": 1.0,
     "id": "vsts-ticket-printing",
-    "version": "0.0.29",
+    "version": "0.0.37",
     "name": "VSTS Ticket Printing",
     "description": "An extension to help print tickets",
     "public": false,
