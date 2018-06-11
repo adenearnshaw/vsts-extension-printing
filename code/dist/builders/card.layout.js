@@ -23,6 +23,7 @@ define(["require", "exports"], function (require, exports) {
         };
         CardLayout._cardCss = '\
         body {\
+            -webkit-print-color-adjust: exact !important;\
             background-color: #FFFFFF;\
             font-family: Arial, Helvetica, sans-serif;\
         }\
@@ -63,7 +64,7 @@ define(["require", "exports"], function (require, exports) {
             background-color: rgb(204, 204, 204);\
             font-weight: bold;\
             padding: 5px;\
-            margin-right: 5px;\
+            margin-right: 10px;\
         }\
         .ticket-title {\
             margin-top: 34px;\
@@ -97,12 +98,12 @@ define(["require", "exports"], function (require, exports) {
             <div id="work-item-accent" class="accent-section"></div>\
             <div class="effort-section">\
                 <span>Points:</span>\
-                <span id="work-item-effort" class="effort-value">0</span>\
+                <span id="work-item-effort" class="effort-value">-</span>\
             </div>\
             <div class="main-section">\
-                <h1 id="work-item-id">#0000</h1>\
+                <h1 id="work-item-id">#000</h1>\
                 <div id="work-item-tags" class="tag-container"></div>\
-                <h2 id="work-item-title" class="ticket-title">Test Work Item Title</h2>\
+                <h1 id="work-item-title" class="ticket-title"></h1>\
             </div>\
         </div>';
         return CardLayout;
