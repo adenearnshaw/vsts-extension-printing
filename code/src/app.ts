@@ -25,22 +25,29 @@ export class App {
             console.table(ticketItems);
 
             const cardHtml = new HtmlTicketsDocumentBuilder().generateDocumentHtml(ticketItems);
-            this.openPrintWindow(cardHtml, 1400, 800);
+            this.showPrintDialog(cardHtml, 1400, 800);
         });
     }
 
-    private openPrintWindow(html: string, w: number, h: number) {
+    private showPrintDialog(html: string, w: number, h: number) {
 
-        // Fixes dual-screen position                         Most browsers      Firefox
-        const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
-        const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
+        // // Fixes dual-screen position                         Most browsers      Firefox
+        // const dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX;
+        // const dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY;
 
-        const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
-        const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+        // const width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+        // const height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
 
-        const left = ((width / 2) - (w / 2)) + dualScreenLeft;
-        const top = ((height / 2) - (h / 2)) + dualScreenTop;
-        const printWindow = window.open('', 'PRINT', 'width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+        // const left = ((width / 2) - (w / 2)) + dualScreenLeft;
+        // const top = ((height / 2) - (h / 2)) + dualScreenTop;
+        // const printWindow = window.open('', 'PRINT', 'width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+
+        const printWindow = this.openPrintWindow(w,h);
+
+        if (!printWindow) {
+            console.log('Please enable popups');
+            return;
+        }
 
         printWindow.document.write(html);
 
@@ -49,6 +56,18 @@ export class App {
 
         printWindow.print();
         printWindow.close();
+    }
+
+    private openPrintWindow(windowWidth: number, windowHeight: number): Window {
+        const centerLeft = (window.screen.availWidth - windowWidth) / 2;
+        const centerTop = ((window.screen.availHeight - windowHeight) / 2);
+
+        const misc_features = ', status=no, location=no, scrollbars=no, resizable=no';
+
+        const windowFeatures = 'width=' + windowWidth + ',height=' + windowHeight + ',left=' + centerLeft + ',top=' + centerTop + misc_features;
+        const win = window.open('', 'PRINT', windowFeatures);
+
+        return win;
     }
 
     private getWorkItemProjectNameFromContext(): string {
