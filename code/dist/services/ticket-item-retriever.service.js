@@ -33,18 +33,11 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-define(["require", "exports", "TFS/WorkItemTracking/RestClient"], function (require, exports, RestClient) {
+define(["require", "exports", "TFS/WorkItemTracking/RestClient", "./work-item-field-keys.constants"], function (require, exports, RestClient, work_item_field_keys_constants_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var TicketItemRetrieverService = /** @class */ (function () {
         function TicketItemRetrieverService() {
-            this._workItemFieldKeys = {
-                'id': 'System.Id',
-                'title': 'System.Title',
-                'itemType': 'System.WorkItemType',
-                'effort': 'Microsoft.VSTS.Scheduling.Effort',
-                'tags': 'System.Tags'
-            };
         }
         TicketItemRetrieverService.prototype.retrieveTicketItems = function (projectName, workItemIds) {
             return __awaiter(this, void 0, void 0, function () {
@@ -54,7 +47,7 @@ define(["require", "exports", "TFS/WorkItemTracking/RestClient"], function (requ
                     switch (_b.label) {
                         case 0:
                             client = RestClient.getClient();
-                            workItemFields = Object.keys(this._workItemFieldKeys).map(function (k) { return _this._workItemFieldKeys[k]; });
+                            workItemFields = Object.keys(work_item_field_keys_constants_1.WorkItemFieldKeyConstants).map(function (k) { return work_item_field_keys_constants_1.WorkItemFieldKeyConstants[k]; });
                             _a = this;
                             return [4 /*yield*/, client.getWorkItemTypes(projectName)];
                         case 1:
@@ -69,34 +62,42 @@ define(["require", "exports", "TFS/WorkItemTracking/RestClient"], function (requ
             });
         };
         TicketItemRetrieverService.prototype.buildTicketItem = function (workItem) {
+            var workItemType = this._workItemTypes.filter(function (wi) { return wi.name == workItem.fields[work_item_field_keys_constants_1.WorkItemFieldKeyConstants.itemType]; })[0];
             var ticketItem = {
-                id: workItem.fields[this._workItemFieldKeys['id']],
-                title: workItem.fields[this._workItemFieldKeys['title']],
-                effort: this.extractEffort(workItem.fields[this._workItemFieldKeys['effort']]),
-                tags: this.extractTags(workItem.fields[this._workItemFieldKeys['tags']]),
-                accent: this.extractAccent(workItem.fields[this._workItemFieldKeys['itemType']])
+                id: workItem.fields[work_item_field_keys_constants_1.WorkItemFieldKeyConstants.id],
+                itemType: workItemType.name,
+                title: workItem.fields[work_item_field_keys_constants_1.WorkItemFieldKeyConstants.title],
+                accentColor: this.extractAccent(workItemType),
+                areaPath: workItem.fields[work_item_field_keys_constants_1.WorkItemFieldKeyConstants.areaPath],
+                description: workItem.fields[work_item_field_keys_constants_1.WorkItemFieldKeyConstants.description],
+                dueDate: workItem.fields[work_item_field_keys_constants_1.WorkItemFieldKeyConstants.dueDate],
+                effort: workItem.fields[work_item_field_keys_constants_1.WorkItemFieldKeyConstants.effort],
+                iconUrl: workItemType.icon.url,
+                isBlocked: this.extractIsBlocked(workItem.fields[work_item_field_keys_constants_1.WorkItemFieldKeyConstants.isBlocked]),
+                iterationPath: workItem.fields[work_item_field_keys_constants_1.WorkItemFieldKeyConstants.iterationPath],
+                priority: workItem.fields[work_item_field_keys_constants_1.WorkItemFieldKeyConstants.priority],
+                reproSteps: workItem.fields[work_item_field_keys_constants_1.WorkItemFieldKeyConstants.reproSteps],
+                tags: this.extractTags(workItem.fields[work_item_field_keys_constants_1.WorkItemFieldKeyConstants.tags]),
+                teamProject: workItem.fields[work_item_field_keys_constants_1.WorkItemFieldKeyConstants.teamProject]
             };
+            console.log(ticketItem);
             return ticketItem;
         };
-        TicketItemRetrieverService.prototype.extractEffort = function (effortRaw) {
-            if (!effortRaw) {
-                return "-";
+        TicketItemRetrieverService.prototype.extractAccent = function (workItemType) {
+            if (!workItemType) {
+                return '#FFFFFF';
             }
-            return effortRaw;
+            var accent = "#" + workItemType.color;
+            return accent;
+        };
+        TicketItemRetrieverService.prototype.extractIsBlocked = function (blocked) {
+            return blocked === 'Yes';
         };
         TicketItemRetrieverService.prototype.extractTags = function (tagsRaw) {
             if (!tagsRaw) {
                 return [];
             }
             return tagsRaw.split(';').map(function (s) { return s.trim(); });
-        };
-        TicketItemRetrieverService.prototype.extractAccent = function (itemType) {
-            var workItemType = this._workItemTypes.filter(function (wi) { return wi.name == itemType; })[0];
-            if (!workItemType) {
-                return '#FFFFFF';
-            }
-            var accent = "#" + workItemType.color;
-            return accent;
         };
         return TicketItemRetrieverService;
     }());

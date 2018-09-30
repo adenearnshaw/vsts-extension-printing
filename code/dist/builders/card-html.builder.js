@@ -16,8 +16,8 @@ define(["require", "exports", "./card.layout"], function (require, exports, card
             var cardDoc = domParser.parseFromString(card_layout_1.CardLayout.cardHtml, 'text/html');
             cardDoc.getElementById('work-item-id').innerText = "#" + ticketItem.id;
             cardDoc.getElementById('work-item-title').innerText = ticketItem.title;
-            cardDoc.getElementById('work-item-effort').innerText = ticketItem.effort;
-            cardDoc.getElementById('work-item-accent').style.backgroundColor = ticketItem.accent;
+            cardDoc.getElementById('work-item-effort').innerText = ticketItem.effort != null ? ticketItem.effort.toString() : '';
+            cardDoc.getElementById('work-item-accent').style.backgroundColor = ticketItem.accentColor;
             var tagsContainer = cardDoc.getElementById('work-item-tags');
             ticketItem.tags.forEach(function (tag) {
                 var tagHtml = card_layout_1.CardLayout.getTagHtml(tag);

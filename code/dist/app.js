@@ -16,7 +16,6 @@ define(["require", "exports", "./services/services.module", "./builders/builders
             var workItemIds = this.getWorkItemIdsFromContext();
             var workItemsPromise = this._workItemRetriever.retrieveTicketItems(workItemProject, workItemIds);
             workItemsPromise.then(function (ticketItems) {
-                console.table(ticketItems);
                 var cardHtml = new builders_module_1.HtmlTicketsDocumentBuilder().generateDocumentHtml(ticketItems);
                 _this.showPrintDialog(cardHtml, 1400, 800);
             });

@@ -22,8 +22,6 @@ export class App {
         const workItemsPromise = this._workItemRetriever.retrieveTicketItems(workItemProject, workItemIds);
 
         workItemsPromise.then(ticketItems => {
-            console.table(ticketItems);
-
             const cardHtml = new HtmlTicketsDocumentBuilder().generateDocumentHtml(ticketItems);
             this.showPrintDialog(cardHtml, 1400, 800);
         });
