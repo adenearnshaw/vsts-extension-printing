@@ -11,16 +11,6 @@ define(["require", "exports"], function (require, exports) {
             enumerable: true,
             configurable: true
         });
-        Object.defineProperty(CardLayout, "cardHtml", {
-            get: function () {
-                return this._cardHtml;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        CardLayout.getTagHtml = function (tagText) {
-            return "<span class=\"tag\">" + tagText + "</span>";
-        };
         CardLayout._cardCss = '\
         body {\
             -webkit-print-color-adjust: exact !important;\
@@ -46,6 +36,7 @@ define(["require", "exports"], function (require, exports) {
             background-color: #FFFFFF;\
             width: 660px;\
             height: 440px;\
+            overflow: hidden;\
         }\
         .accent-section {\
             width: 16px;\
@@ -68,6 +59,9 @@ define(["require", "exports"], function (require, exports) {
         }\
         .ticket-title {\
             margin-top: 34px;\
+        }\
+        .ticket-description p {\
+            margin: 0 0 10px 0;\
         }\
         .effort-section {\
             float: right;\
@@ -93,19 +87,6 @@ define(["require", "exports"], function (require, exports) {
                 page-break-after: always;\
             }\
         }';
-        CardLayout._cardHtml = '\
-        <div class="work-item-card">\
-            <div id="work-item-accent" class="accent-section"></div>\
-            <div class="effort-section">\
-                <span>Points:</span>\
-                <span id="work-item-effort" class="effort-value">-</span>\
-            </div>\
-            <div class="main-section">\
-                <h1 id="work-item-id">#000</h1>\
-                <div id="work-item-tags" class="tag-container"></div>\
-                <h1 id="work-item-title" class="ticket-title"></h1>\
-            </div>\
-        </div>';
         return CardLayout;
     }());
     exports.CardLayout = CardLayout;

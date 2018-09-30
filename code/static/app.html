@@ -7,20 +7,44 @@
 </head>
 
 <body>
+    <script src="../lib/handlebars.min.js"></script>
     <script src="../lib/VSS.SDK.min.js"></script>
-    <script>
+    <script id="default-template" type="text/x-handlebars-template">
+        <div class="work-item-card">
+            <div id="work-item-accent" class="accent-section" style="background-color: {{accentColor}}"></div>
+            <div class="effort-section">
+                <span>Points:</span>
+                <span id="work-item-effort" class="effort-value">{{effort}}</span>
+            </div>
+            <div class="main-section">
+                <h1 id="work-item-id">#{{id}}</h1>
+                <div id="work-item-tags" class="tag-container">
+                    {{#each tags}}
+                    <span class="tag">{{this}}</span>
+                    {{/each}}
+                </div>
+                <h1 id="work-item-title" class="ticket-title">{{title}}</h1>
+                <div class="ticket-description">
+                    {{#if reproSteps}}
+                    <p>{{{reproSteps}}}</p>
+                    {{else}}
+                    <p>{{{description}}}</p>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/javascript">
         VSS.init({
             setupModuleLoader: true,
-            usePlatformScripts: true,
-            usePlatformStyles: true
-        });
-    </script>
-
-    <script>
-        VSS.init({
             explicitNotifyLoaded: true,
             usePlatformScripts: true,
-            usePlatformStyles: true
+            usePlatformStyles: true,
+            moduleLoaderConfig: {
+                paths: {
+                    "handlebars": "lib/handlebars"
+                }
+            }
         });
 
         VSS.require(["dist/app"], function (app) { });

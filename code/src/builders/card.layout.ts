@@ -2,15 +2,7 @@ export class CardLayout {
     public static get cardCss(): string {
         return this._cardCss;
     }
-    
-    public static get cardHtml(): string {
-        return this._cardHtml;
-    }
-
-    public static getTagHtml(tagText: string): string {
-        return `<span class="tag">${tagText}</span>`;
-    }
-
+   
     private static _cardCss: string = '\
         body {\
             -webkit-print-color-adjust: exact !important;\
@@ -36,6 +28,7 @@ export class CardLayout {
             background-color: #FFFFFF;\
             width: 660px;\
             height: 440px;\
+            overflow: hidden;\
         }\
         .accent-section {\
             width: 16px;\
@@ -58,6 +51,9 @@ export class CardLayout {
         }\
         .ticket-title {\
             margin-top: 34px;\
+        }\
+        .ticket-description p {\
+            margin: 0 0 10px 0;\
         }\
         .effort-section {\
             float: right;\
@@ -84,17 +80,5 @@ export class CardLayout {
             }\
         }';
 
-    private static _cardHtml: string = '\
-        <div class="work-item-card">\
-            <div id="work-item-accent" class="accent-section"></div>\
-            <div class="effort-section">\
-                <span>Points:</span>\
-                <span id="work-item-effort" class="effort-value">-</span>\
-            </div>\
-            <div class="main-section">\
-                <h1 id="work-item-id">#000</h1>\
-                <div id="work-item-tags" class="tag-container"></div>\
-                <h1 id="work-item-title" class="ticket-title"></h1>\
-            </div>\
-        </div>';
+    
 }

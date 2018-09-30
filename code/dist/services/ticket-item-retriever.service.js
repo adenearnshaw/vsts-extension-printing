@@ -68,6 +68,7 @@ define(["require", "exports", "TFS/WorkItemTracking/RestClient", "./work-item-fi
                 itemType: workItemType.name,
                 title: workItem.fields[work_item_field_keys_constants_1.WorkItemFieldKeyConstants.title],
                 accentColor: this.extractAccent(workItemType),
+                acceptanceCriteria: workItem.fields[work_item_field_keys_constants_1.WorkItemFieldKeyConstants.acceptanceCriteria],
                 areaPath: workItem.fields[work_item_field_keys_constants_1.WorkItemFieldKeyConstants.areaPath],
                 description: workItem.fields[work_item_field_keys_constants_1.WorkItemFieldKeyConstants.description],
                 dueDate: workItem.fields[work_item_field_keys_constants_1.WorkItemFieldKeyConstants.dueDate],
