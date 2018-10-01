@@ -3,11 +3,12 @@ import * as Handlebars from "handlebars";
 import Tickets = require("../tickets/tickets.module");
 import { CardLayout } from "./card.layout";
 
+declare var handlebarTemplates: any;
+
 export class CardHtmlBuilder {
     private _doc: Document;
     private _cardContainer: Element;
     private _cardCount: number = 0;
-    private _templateConverter: Function;
 
     constructor() {
         var doc = document.implementation.createHTMLDocument();
@@ -17,14 +18,16 @@ export class CardHtmlBuilder {
         doc.head.appendChild(styleNode);
         this._doc = doc;
 
-        const handlebarTemplate = document.getElementById("default-template").innerHTML;
-        this._templateConverter = Handlebars.compile(handlebarTemplate);
-
         this.createNewRow();
     }
 
     public addCard(ticketItem: Tickets.TicketItem) {
-        const templateHtml = this._templateConverter(ticketItem);
+        let templateHtml: string;
+        if (ticketItem.teamProject === "TeamTesla") {
+            templateHtml = handlebarTemplates.template_card_simple(ticketItem);
+        } else {
+            templateHtml = handlebarTemplates.template_card_detailed(ticketItem);            
+        }
 
         const cardNode = this._doc.createElement("div");
         cardNode.classList.add("col");

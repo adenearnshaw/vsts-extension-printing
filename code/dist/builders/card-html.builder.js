@@ -1,4 +1,4 @@
-define(["require", "exports", "handlebars", "./card.layout"], function (require, exports, Handlebars, card_layout_1) {
+define(["require", "exports", "./card.layout"], function (require, exports, card_layout_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var CardHtmlBuilder = /** @class */ (function () {
@@ -9,12 +9,16 @@ define(["require", "exports", "handlebars", "./card.layout"], function (require,
             styleNode.innerHTML = card_layout_1.CardLayout.cardCss;
             doc.head.appendChild(styleNode);
             this._doc = doc;
-            var handlebarTemplate = document.getElementById("default-template").innerHTML;
-            this._templateConverter = Handlebars.compile(handlebarTemplate);
             this.createNewRow();
         }
         CardHtmlBuilder.prototype.addCard = function (ticketItem) {
-            var templateHtml = this._templateConverter(ticketItem);
+            var templateHtml;
+            if (ticketItem.teamProject === "TeamTesla") {
+                templateHtml = handlebarTemplates.template_card_simple(ticketItem);
+            }
+            else {
+                templateHtml = handlebarTemplates.template_card_detailed(ticketItem);
+            }
             var cardNode = this._doc.createElement("div");
             cardNode.classList.add("col");
             cardNode.classList.add("card-holder");

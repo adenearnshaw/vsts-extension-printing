@@ -1,0 +1,16 @@
+<div class="work-item-card">
+    <div id="work-item-accent" class="accent-section" style="background-color: {{accentColor}}"></div>
+    <div class="effort-section">
+        <span>Points:</span>
+        <span id="work-item-effort" class="effort-value">{{effort}}</span>
+    </div>
+    <div class="main-section">
+        <h1 id="work-item-id">#{{id}}</h1>
+        <div id="work-item-tags" class="tag-container">
+            {{#each tags}}
+            <span class="tag">{{this}}</span>
+            {{/each}}
+        </div>
+        <h1 id="work-item-title" class="ticket-title">{{title}}</h1>
+    </div>
+</div>

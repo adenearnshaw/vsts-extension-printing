@@ -6,13 +6,14 @@
   "author": "Aden Earnshaw",
   "license": "ISC",
   "scripts": {
-    "prebuild": "npm run lint",
-    "build": "tsc -p .",
+    "prebuild": "npm run clean",
+    "build": "npm run lint && npm run compile-templates &&  tsc -p .",
     "postbuild": "npm run package",
     "package": "tfx extension create --output-path ./packages/ --rev-version",
     "gallery-publish": "tfx extension publish --output-path ./packages/ --rev-version",
     "clean": "rimraf ./dist && rimraf ./packages/*.vsix",
-    "lint": "tslint -c tslint.json 'src/*.ts'"
+    "lint": "tslint -c tslint.json 'src/*.ts'",
+    "compile-templates": "handlebars -m static/templates/* -f static/templates/templates.js"
   },
   "dependencies": {
     "handlebars": "^4.0.12",
