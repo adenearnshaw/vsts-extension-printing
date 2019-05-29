@@ -1,7 +1,19 @@
 export interface TicketItem {
     id: number;
+    itemType: string;
     title: string;
-    effort: string;
-    accent: string;
-    tags: string[];
+
+    accentColor?: string;
+    acceptanceCriteria?: string;
+    areaPath?: string; 
+    description?: string;
+    dueDate?: string;
+    effort?: number;
+    iconUrl?: string;
+    isBlocked?: boolean;
+    iterationPath?: string;
+    priority?: number;
+    reproSteps?: string;
+    tags?: string[];
+    teamProject?: string;
 }

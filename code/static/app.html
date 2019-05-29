@@ -7,20 +7,22 @@
 </head>
 
 <body>
+    <script src="../lib/handlebars.runtime.min.js"></script>
+    <script src="../static/templates/templates.js"></script>
     <script src="../lib/VSS.SDK.min.js"></script>
-    <script>
+    
+    <script type="text/javascript">
+        var handlebarTemplates = Handlebars.templates;
         VSS.init({
             setupModuleLoader: true,
-            usePlatformScripts: true,
-            usePlatformStyles: true
-        });
-    </script>
-
-    <script>
-        VSS.init({
             explicitNotifyLoaded: true,
             usePlatformScripts: true,
-            usePlatformStyles: true
+            usePlatformStyles: true,
+            moduleLoaderConfig: {
+                paths: {
+                    "handlebars": "lib/handlebars.runtime.min"
+                }
+            }
         });
 
         VSS.require(["dist/app"], function (app) { });

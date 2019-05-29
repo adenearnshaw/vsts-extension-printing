@@ -17,11 +17,12 @@
         "import-spacing": true,
         "indent": [
             true,
-            "spaces"
+            "spaces",
+            4
         ],
         "max-line-length": [
             true,
-            180
+            240
         ],
         "no-console": [
             false,

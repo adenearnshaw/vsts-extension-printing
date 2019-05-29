@@ -6,20 +6,23 @@
   "author": "Aden Earnshaw",
   "license": "ISC",
   "scripts": {
-    "prebuild": "npm run lint",
-    "build": "tsc -p .",
+    "prebuild": "npm run clean",
+    "build": "npm run lint && npm run compile-templates &&  tsc -p .",
     "postbuild": "npm run package",
     "package": "tfx extension create --output-path ./packages/ --rev-version",
     "gallery-publish": "tfx extension publish --output-path ./packages/ --rev-version",
     "clean": "rimraf ./dist && rimraf ./packages/*.vsix",
-    "lint": "tslint -c tslint.json 'src/*.ts'"
+    "lint": "tslint -c tslint.json 'src/*.ts'",
+    "compile-templates": "handlebars -m static/templates/* -f static/templates/templates.js"
   },
   "dependencies": {
+    "handlebars": "^4.0.12",
     "vss-web-extension-sdk": "^5.134.0"
   },
   "devDependencies": {
     "rimraf": "^2.5.4",
-    "tfx-cli": "^0.5.10",
+    "tfx-cli": "^0.6.3",
     "tslint": "^5.10.0",
-    "typescript": "^2.9.1"  }
+    "typescript": "^2.9.1"
+  }
 }
