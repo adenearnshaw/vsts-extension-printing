@@ -1,7 +1,5 @@
-import * as Handlebars from "handlebars";
-
-import Tickets = require("../tickets/tickets.module");
-import { CardLayout } from "./card.layout";
+import Tickets = require('../tickets/tickets.module');
+import { CardLayout } from './card.layout';
 
 declare var handlebarTemplates: any;
 
@@ -11,9 +9,9 @@ export class CardHtmlBuilder {
     private _cardCount: number = 0;
 
     constructor() {
-        var doc = document.implementation.createHTMLDocument();
+        const doc = document.implementation.createHTMLDocument();
 
-        const styleNode = doc.createElement("style");
+        const styleNode = doc.createElement('style');
         styleNode.innerHTML = CardLayout.cardCss;
         doc.head.appendChild(styleNode);
         this._doc = doc;
@@ -22,16 +20,12 @@ export class CardHtmlBuilder {
     }
 
     public addCard(ticketItem: Tickets.TicketItem) {
-        let templateHtml: string;
-        if (ticketItem.teamProject === "TeamTesla") {
-            templateHtml = handlebarTemplates.template_card_simple(ticketItem);
-        } else {
-            templateHtml = handlebarTemplates.template_card_detailed(ticketItem);            
-        }
+        const templateHtml = handlebarTemplates.template_card_simple(ticketItem);
+        // const templateHtml = handlebarTemplates.template_card_detailed(ticketItem);
 
-        const cardNode = this._doc.createElement("div");
-        cardNode.classList.add("col");
-        cardNode.classList.add("card-holder");
+        const cardNode = this._doc.createElement('div');
+        cardNode.classList.add('col');
+        cardNode.classList.add('card-holder');
         cardNode.innerHTML = templateHtml;
 
         this._cardContainer.appendChild(cardNode);
@@ -45,17 +39,17 @@ export class CardHtmlBuilder {
     }
 
     public build(): string {
-        const pageBreaks = this._doc.getElementsByClassName("pagebreak");
+        const pageBreaks = this._doc.getElementsByClassName('pagebreak');
         this._doc.body.removeChild(pageBreaks[pageBreaks.length - 1]);
         return this._doc.documentElement.outerHTML;
     }
 
     private createNewRow(): void {
-        const cardContainer = this._doc.createElement("div");
-        cardContainer.classList.add("row");
+        const cardContainer = this._doc.createElement('div');
+        cardContainer.classList.add('row');
 
-        const pageBreakNode = this._doc.createElement("div");
-        pageBreakNode.classList.add("pagebreak");
+        const pageBreakNode = this._doc.createElement('div');
+        pageBreakNode.classList.add('pagebreak');
 
         this._doc.body.appendChild(cardContainer);
         this._doc.body.appendChild(pageBreakNode);

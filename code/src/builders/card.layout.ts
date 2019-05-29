@@ -2,7 +2,7 @@ export class CardLayout {
     public static get cardCss(): string {
         return this._cardCss;
     }
-   
+
     private static _cardCss: string = '\
         body {\
             -webkit-print-color-adjust: exact !important;\
@@ -79,6 +79,4 @@ export class CardLayout {
                 page-break-after: always;\
             }\
         }';
-
-    
 }

@@ -2,7 +2,7 @@ export interface TicketItem {
     id: number;
     itemType: string;
     title: string;
-    
+
     accentColor?: string;
     acceptanceCriteria?: string;
     areaPath?: string; 
