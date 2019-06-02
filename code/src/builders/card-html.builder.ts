@@ -31,7 +31,7 @@ export class CardHtmlBuilder {
         this._cardContainer.appendChild(cardNode);
         this._cardCount++;
 
-        if (this._cardCount % 4 == 0) {
+        if (this._cardCount % 4 === 0) {
             this.createNewRow();
         }
 
